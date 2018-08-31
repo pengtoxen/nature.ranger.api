@@ -1,0 +1,7 @@
+.vscode/
+tmp/
+*.exe
+*.exe~
+*.tmp
+debug
+routers/commentsRouter_controllers.go
