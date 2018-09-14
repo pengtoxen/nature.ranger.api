@@ -9,10 +9,14 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
+	"nature.ranger.api/controllers/Login"
 	"nature.ranger.api/controllers/users"
 )
 
 func init() {
+	//login
+	beego.Router("/login/login", &users.LoginController{}, "get:Login")
+	//user
 	beego.Router("/user/add", &users.UserController{}, "get:AddUser")
 	beego.Router("/user/delete", &users.UserController{}, "post:DeleteUser")
 	beego.Router("/user/update", &users.UserController{}, "post:UpdateUser")

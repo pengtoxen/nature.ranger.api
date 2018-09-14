@@ -11,7 +11,7 @@ var (
 )
 
 type User struct {
-	Id       int    `orm:"pk;" json:"id"`
+	Id       int64  `orm:"pk;" json:"id"`
 	Username string `json:"username" valid:"Required;AlphaDash"`
 	Password string `json:"password" valid:"Required;AlphaDash"`
 	Openid   string `json:"openid"`
@@ -30,9 +30,15 @@ func AddUser(user *User) (int64, error) {
 	return id, err
 }
 
-func UpdateUser(id int64, user *User) error {
+func UpdateUser(user *User) error {
 	o := orm.NewOrm()
 	_, err := o.Update(user, "username", "password", "nickname", "avatar", "phone")
+	return err
+}
+
+func DeleteUser(user *User) error {
+	o := orm.NewOrm()
+	_, err := o.Delete(user)
 	return err
 }
 
