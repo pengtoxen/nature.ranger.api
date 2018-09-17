@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
 )
 
 func TableName(name string) string {
@@ -26,4 +27,12 @@ func Pagination(pagi []int) (offset int, start int) {
 	}
 	start = (page - 1) * offset
 	return offset, start
+}
+
+func QueryCond(condArr map[string]string) (cond *orm.Condition) {
+	cond = orm.NewCondition()
+	for k, v := range condArr {
+		cond = cond.And(k, v)
+	}
+	return cond
 }

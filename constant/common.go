@@ -49,6 +49,7 @@ var MessageTmpls = map[string]map[string]string{
 		"duplicate":       "重复",
 	},
 	"common": {
-		"id_is_required": "id不能为空",
+		"id_is_required":                 "id不能为空",
+		"username_or_password_incorrect": "用户名或密码不正确",
 	},
 }

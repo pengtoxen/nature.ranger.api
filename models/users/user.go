@@ -125,3 +125,15 @@ func GetAllUser(condArr map[string]string, pagi ...int) (user []User, num int64,
 	num, err = qs.All(&user)
 	return user, num, err
 }
+
+func Login(condArr map[string]string) (user User, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable(models.TableName(tableName))
+	cond := models.QueryCond(condArr)
+	qs = qs.SetCond(cond)
+	err = qs.One(&user, "id", "username", "password", "openid", "avatar", "phone")
+	if err == nil {
+		return user, nil
+	}
+	return user, err
+}
