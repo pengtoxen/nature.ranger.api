@@ -16,6 +16,7 @@ func Md5(s string) string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
+//sha1方法
 func Sha1(s string) string {
 	h := sha1.New()
 	h.Write([]byte(s))

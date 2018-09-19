@@ -4,7 +4,7 @@ import (
 	"nature.ranger.api/constant"
 	"nature.ranger.api/controllers"
 	"nature.ranger.api/models/users"
-	// "nature.ranger.api/utils"
+	"nature.ranger.api/utils"
 	// "github.com/astaxie/beego"
 	// "github.com/astaxie/beego/utils/pagination"
 )
@@ -53,6 +53,7 @@ func (l *UserController) AddUser() {
 		l.JsonResultError(msg)
 		return
 	}
+	user.Password = utils.Sha1(user.Password)
 	uid, err := users.AddUser(user)
 	if err != nil {
 		l.JsonResultError(err.Error())

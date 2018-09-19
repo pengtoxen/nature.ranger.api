@@ -4,7 +4,7 @@ import (
 	"nature.ranger.api/constant"
 	"nature.ranger.api/controllers"
 	"nature.ranger.api/models/users"
-	// "nature.ranger.api/utils"
+	"nature.ranger.api/utils"
 )
 
 // Operations about Login
@@ -17,7 +17,7 @@ func (l *LoginController) Login() {
 	password := l.GetString("password")
 	condArr := make(map[string]string)
 	condArr["username"] = username
-	condArr["password"] = password
+	condArr["password"] = utils.Sha1(password)
 	userInfo, err := users.Login(condArr)
 	if err != nil {
 		l.JsonResultError(constant.MessageTmpls["common"]["username_or_password_incorrect"])
