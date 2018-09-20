@@ -3,5 +3,7 @@ tmp/
 *.exe
 *.exe~
 *.tmp
+*.log
+log/
 debug
 routers/commentsRouter_controllers.go
