@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
+	// "github.com/astaxie/beego/logs"
 	_ "nature.ranger.api/initial"
 	_ "nature.ranger.api/routers"
 	"net/http"
