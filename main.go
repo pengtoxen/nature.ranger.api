@@ -15,9 +15,9 @@ type res struct {
 }
 
 var FilterUser = func(ctx *context.Context) {
-	_, ok := ctx.Input.Session("userLogin").(string)
-	if !ok && ctx.Request.RequestURI != "/login" {
-		//ctx.Output.JSON(map[string]interface{}{"code": 1, "msg": "please login"}, false, false)
+	_, ok := ctx.Input.Session("userInfo").(string)
+	if !ok && ctx.Request.RequestURI != "/login/login" {
+		ctx.Output.JSON(map[string]interface{}{"code": 1, "msg": "please login"}, false, false)
 	}
 }
 
