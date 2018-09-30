@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	// "github.com/astaxie/beego/logs"
 	_ "nature.ranger.api/initial"
 	_ "nature.ranger.api/routers"
 	"net/http"
@@ -18,7 +17,7 @@ type res struct {
 var FilterUser = func(ctx *context.Context) {
 	_, ok := ctx.Input.Session("userInfo").(string)
 	if !ok && ctx.Request.RequestURI != "/login/login" {
-		ctx.Output.JSON(map[string]interface{}{"code": 1, "msg": "please login"}, false, false)
+		//ctx.Output.JSON(map[string]interface{}{"code": 1, "msg": "please login"}, false, false)
 	}
 }
 

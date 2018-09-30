@@ -51,5 +51,6 @@ var MessageTmpls = map[string]map[string]string{
 	"common": {
 		"id_is_required":                 "id不能为空",
 		"username_or_password_incorrect": "用户名或密码不正确",
+		"login_fail":                     "登录失败",
 	},
 }

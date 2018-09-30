@@ -104,6 +104,6 @@ func (this *BaseController) JsonResultError(data interface{}) {
 	this.JsonResult(1, data)
 }
 
-func (this *BaseController) dump(data interface{}) {
+func (this *BaseController) Dump(data interface{}) {
 	fmt.Printf("%+v\n", data)
 }

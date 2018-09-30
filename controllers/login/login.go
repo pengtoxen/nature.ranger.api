@@ -4,6 +4,7 @@ import (
 	"nature.ranger.api/constant"
 	"nature.ranger.api/controllers"
 	"nature.ranger.api/models/users"
+	"nature.ranger.api/services"
 	"nature.ranger.api/utils"
 )
 
@@ -23,5 +24,19 @@ func (l *LoginController) Login() {
 		l.JsonResultError(constant.MessageTmpls["common"]["username_or_password_incorrect"])
 		return
 	}
+	l.Dump(l.CruSession)
+	panic("dd")
+	err = services.InitData(l.CruSession)
+
+	if err != nil {
+		l.JsonResultError(constant.MessageTmpls["common"]["login_fail"])
+		return
+	}
+	err = services.GenerateToken(userInfo.Id)
+	if err != nil {
+		l.JsonResultError(constant.MessageTmpls["common"]["login_fail"])
+		return
+	}
+	l.Dump(services.GetToken())
 	l.JsonResultOk(userInfo)
 }
