@@ -1,67 +1,46 @@
 package services
 
 import (
-	// "github.com/astaxie/beego/context"
-	"github.com/astaxie/beego/session"
+	"github.com/astaxie/beego/cache"
 	"nature.ranger.api/utils"
 	"strconv"
 	"time"
 )
 
-var cruSession session.Store
+var cacheObj cache.Cache
 
-type Token struct {
-	Token  string `json:"token"`
-	Expire int64  `json:"expire"`
-}
-
-func InitData(handler session.Store) {
-	if cruSession == nil {
-		cruSession = handler
+func init() {
+	if cacheObj == nil {
+		cacheObj, _ = cache.NewCache("file", `{"CachePath":"./tmp/cache","FileSuffix":".cache","DirectoryLevel":2,"EmbedExpiry":3600}`)
 	}
 }
 
-func GenerateToken(uid int64) error {
-	tokenstr := tokenString(uid)
-	token := Token{
-		Token:  tokenstr,
-		Expire: expireTime(),
+func GenerateToken(uid int64) (string, error) {
+	tokenStr := tokenString(uid)
+	err := cacheObj.Put(tokenStr, uid, 3600*time.Second)
+	if err == nil {
+		return tokenStr, nil
 	}
-	return cruSession.Set("access_token", token)
+	return "", err
 }
 
-func GetToken() Token {
-	return cruSession.Get("access_token").(Token)
+func GetToken(tokenStr string) int64 {
+	return cacheObj.Get(tokenStr).(int64)
 }
 
 func IsValided(tokenStr string) bool {
-	token := GetToken()
-	if token.Token != tokenStr {
-		return false
-	}
-	return true
+	return cacheObj.IsExist(tokenStr)
 }
 
-func IsExpired() bool {
-	token := GetToken()
-	expire := token.Expire
-	t := time.Now()
-	now := t.UTC().UnixNano()
-	if expire < now {
-		return false
-	}
-	return true
+func Delete(tokenStr string) error {
+	return cacheObj.Delete(tokenStr)
 }
 
-func Delete() error {
-	return cruSession.Delete("access_token")
-}
-
-func expireTime() int64 {
-	t := time.Now()
-	timestamp := t.UTC().UnixNano() + 1*24*3600
-	return timestamp
-}
+// func expireTime() int64 {
+// 	t := time.Now()
+// 	timestamp := t.UTC().UnixNano() + 1*24*3600
+// 	return timestamp
+// }
 
 func tokenString(uid int64) string {
 	var str []string

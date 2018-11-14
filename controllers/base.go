@@ -5,16 +5,11 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/validation"
 	"nature.ranger.api/constant"
-	"strconv"
 	"strings"
 )
 
 type BaseController struct {
 	beego.Controller
-	IsLogin      bool
-	UserInfo     map[string]interface{}
-	UserUserId   int64
-	UserUsername string
 }
 
 /**
@@ -26,27 +21,6 @@ type BaseController struct {
  */
 func init() {
 	validation.SetDefaultMessage(constant.FieldValidateInfo)
-}
-
-/**
- * 预处理方法
- * @author pwt
- * @date 2018-9-19
- * @param
- * @return
- */
-func (this *BaseController) Prepare() {
-	userInfo := this.GetSession("userInfo")
-	if userInfo == nil {
-		this.IsLogin = false
-	} else {
-		this.IsLogin = true
-		tmpInfo := strings.Split((userInfo).(string), "||")
-		userid, _ := strconv.Atoi(tmpInfo[0])
-		this.UserUserId = int64(userid)
-		this.UserUsername = tmpInfo[1]
-		this.UserInfo = map[string]interface{}{"userid": userid, "UserUsername": tmpInfo[1]}
-	}
 }
 
 /**
